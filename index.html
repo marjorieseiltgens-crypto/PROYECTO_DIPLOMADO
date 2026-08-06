@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="MVP de gestión y trazabilidad sostenible de residuos para SynergiaBio">
+  <title>SynergiaBio | Trazabilidad sostenible</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="#inicio" aria-label="Ir al inicio">
+      <span class="brand-mark">S</span>
+      <span><strong>SynergiaBio</strong><small>Gestión sostenible</small></span>
+    </a>
+    <nav aria-label="Navegación principal">
+      <button class="nav-item active" data-view="inicio"><span>⌂</span> Resumen</button>
+      <button class="nav-item" data-view="trazabilidad"><span>⇄</span> Trazabilidad</button>
+      <button class="nav-item" data-view="bioseguridad"><span>✓</span> Bioseguridad</button>
+      <button class="nav-item" data-view="retc"><span>▤</span> Reporte RETC</button>
+      <button class="nav-item" data-view="datos"><span>◫</span> Datos y control</button>
+    </nav>
+    <div class="side-note">
+      <span class="status-dot"></span>
+      <div><strong>Modo demostración</strong><small>Datos sintéticos identificados</small></div>
+    </div>
+  </aside>
+
+  <main>
+    <header class="topbar">
+      <div>
+        <button id="menuButton" class="icon-button menu-button" aria-label="Abrir menú">☰</button>
+        <p class="eyebrow">CENTRO DE CONTROL AMBIENTAL</p>
+        <h1 id="pageTitle">Resumen ejecutivo</h1>
+      </div>
+      <div class="top-actions">
+        <button id="notificationButton" class="icon-button" aria-label="Ver alertas">♢<span id="alertBadge" class="badge">0</span></button>
+        <button class="primary" data-action="new-record">+ Registrar movimiento</button>
+      </div>
+    </header>
+
+    <section id="inicio" class="view active">
+      <div class="notice">
+        <span>i</span>
+        <p><strong>Entorno de demostración.</strong> Los registros iniciales son sintéticos. Sustitúyalos por mediciones verificadas antes de tomar decisiones regulatorias.</p>
+        <button data-action="clear-demo">Limpiar demo</button>
+      </div>
+
+      <div id="kpiGrid" class="kpi-grid"></div>
+
+      <div class="dashboard-grid">
+        <article class="card chart-card">
+          <div class="card-head">
+            <div><p class="eyebrow">TENDENCIA MENSUAL</p><h2>Residuos gestionados</h2></div>
+            <select id="chartFilter" aria-label="Filtrar tipo de residuo"><option value="all">Todos los tipos</option><option value="peligroso">Peligrosos</option><option value="valorizable">Valorizables</option></select>
+          </div>
+          <div class="chart-wrap"><canvas id="wasteChart" width="760" height="300" aria-label="Gráfico de residuos por mes"></canvas></div>
+          <div class="legend"><span><i class="legend-green"></i>Valorizables</span><span><i class="legend-orange"></i>Peligrosos</span></div>
+        </article>
+
+        <article class="card">
+          <div class="card-head"><div><p class="eyebrow">CONTROL INTELIGENTE</p><h2>Alertas y recomendaciones</h2></div><span id="alertCount" class="pill danger">0 abiertas</span></div>
+          <div id="alertsList" class="alerts-list"></div>
+        </article>
+
+        <article class="card activity-card">
+          <div class="card-head"><div><p class="eyebrow">TRAZABILIDAD</p><h2>Actividad reciente</h2></div><button class="text-button" data-view-link="trazabilidad">Ver todo →</button></div>
+          <div id="recentActivity"></div>
+        </article>
+
+        <article class="card decision-card">
+          <p class="eyebrow">PRÓXIMA DECISIÓN</p>
+          <div class="decision-icon">✓</div>
+          <h2>Habilitación del acopio</h2>
+          <p id="decisionText">Evaluando evidencia disponible…</p>
+          <div class="progress"><span id="decisionProgress"></span></div>
+          <small id="decisionLabel"></small>
+        </article>
+      </div>
+    </section>
+
+    <section id="trazabilidad" class="view">
+      <div class="section-lead"><div><p>Registre cada ingreso, salida y valorización con responsable y evidencia.</p></div><button class="primary" data-action="new-record">+ Nuevo movimiento</button></div>
+      <article class="card">
+        <div class="toolbar"><input id="recordSearch" type="search" placeholder="Buscar por residuo, lote o responsable"><select id="recordTypeFilter"><option value="all">Todos los residuos</option><option value="peligroso">Peligrosos</option><option value="valorizable">Valorizables</option><option value="otro">Otros</option></select><button id="exportCsv" class="secondary">Exportar CSV</button></div>
+        <div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Movimiento</th><th>Residuo</th><th>Cantidad</th><th>Destino</th><th>Responsable</th><th>Estado</th></tr></thead><tbody id="recordsBody"></tbody></table></div>
+      </article>
+    </section>
+
+    <section id="bioseguridad" class="view">
+      <div class="section-lead"><div><p>Checklist operativo simple, visual y con revisión de incumplimientos.</p></div><button class="primary" data-action="new-checklist">+ Iniciar checklist</button></div>
+      <div id="safetySummary" class="kpi-grid compact"></div>
+      <article class="card">
+        <div class="card-head"><div><p class="eyebrow">ÚLTIMAS INSPECCIONES</p><h2>Registro de bioseguridad</h2></div></div>
+        <div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Operario</th><th>Área</th><th>Duración</th><th>Cumplimiento</th><th>Observación</th></tr></thead><tbody id="checklistsBody"></tbody></table></div>
+      </article>
+    </section>
+
+    <section id="retc" class="view">
+      <div class="retc-grid">
+        <article class="card">
+          <p class="eyebrow">BORRADOR ASISTIDO</p><h2>Consolidación RETC</h2>
+          <p class="muted">La aplicación consolida registros y marca brechas. No envía declaraciones ni reemplaza la revisión profesional.</p>
+          <div id="retcStats" class="retc-stats"></div>
+          <button id="generateRetc" class="primary wide">Generar borrador verificable</button>
+        </article>
+        <article class="card review-card">
+          <div class="card-head"><div><p class="eyebrow">CONTROL HUMANO</p><h2>Autorización profesional</h2></div><span id="retcStatus" class="pill warning">Pendiente</span></div>
+          <label>Nombre del experto ambiental<input id="reviewerName" type="text" placeholder="Nombre y apellido"></label>
+          <label class="check-row"><input id="reviewConfirmed" type="checkbox"><span>Revisé categorías, cantidades, unidades, destinos y normativa vigente.</span></label>
+          <button id="approveRetc" class="secondary wide">Aprobar y descargar JSON</button>
+          <p class="privacy-note">La aprobación queda registrada localmente con fecha y hora.</p>
+        </article>
+      </div>
+      <article class="card"><div class="card-head"><div><p class="eyebrow">VISTA PREVIA</p><h2>Campos consolidados</h2></div></div><pre id="retcPreview">Genere un borrador para visualizar la consolidación.</pre></article>
+    </section>
+
+    <section id="datos" class="view">
+      <div class="data-grid">
+        <article class="card"><p class="eyebrow">GOBERNANZA</p><h2>Estado de las fuentes</h2><div id="sourcesList"></div></article>
+        <article class="card"><p class="eyebrow">PORTABILIDAD</p><h2>Respaldo de información</h2><p class="muted">Descargue una copia completa o restaure un respaldo creado por esta aplicación.</p><div class="stack"><button id="backupData" class="secondary">Descargar respaldo JSON</button><label class="file-button">Restaurar respaldo<input id="restoreData" type="file" accept="application/json"></label><button id="resetData" class="danger-button">Restablecer datos de demostración</button></div></article>
+        <article class="card span-two"><p class="eyebrow">TRAZABILIDAD DE DECISIONES</p><h2>Reglas y umbrales activos</h2><div class="rules-grid"><div><strong>Mezcla en acopio</strong><span>Meta: 0 incidentes abiertos</span></div><div><strong>Autonomía en campo</strong><span>Verde: ≥85% y menos de 3 min</span></div><div><strong>Valorización circular</strong><span>Verde: ≥80% del residuo valorizable</span></div><div><strong>Coincidencia RETC</strong><span>Envío solo con ≥95% y revisión humana</span></div></div></article>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="recordDialog">
+    <form id="recordForm" method="dialog">
+      <div class="dialog-head"><div><p class="eyebrow">TRAZABILIDAD</p><h2>Registrar movimiento</h2></div><button class="icon-button close-dialog" type="button">×</button></div>
+      <div class="form-grid">
+        <label>Fecha y hora<input name="date" type="datetime-local" required></label>
+        <label>Movimiento<select name="movement" required><option value="Ingreso">Ingreso</option><option value="Salida">Salida</option><option value="Valorización">Valorización</option></select></label>
+        <label>Residuo<select name="waste" required><option value="Envases de plaguicidas">Envases de plaguicidas</option><option value="Agroquímico vencido">Agroquímico vencido</option><option value="Macetas plásticas">Macetas plásticas</option><option value="Cartón">Cartón</option><option value="Otro">Otro</option></select></label>
+        <label>Cantidad (kg)<input name="kg" type="number" min="0.01" step="0.01" required></label>
+        <label>Lote o referencia<input name="batch" maxlength="40" placeholder="Ej.: PLG-2026-018" required></label>
+        <label>Destino<select name="destination" required><option>Acopio peligroso</option><option>Acopio valorizable</option><option>Gestor autorizado</option><option>Reutilización interna</option></select></label>
+        <label>Responsable<input name="operator" maxlength="60" required></label>
+        <label>Estado del residuo<select name="condition"><option>Segregado</option><option>En observación</option><option>Conforme para retiro</option></select></label>
+      </div>
+      <label>Observaciones<textarea name="notes" rows="3" maxlength="300" placeholder="Condición del envase, evidencia o incidencia"></textarea></label>
+      <div id="classificationHint" class="ai-hint"></div>
+      <div class="dialog-actions"><button type="button" class="secondary close-dialog">Cancelar</button><button type="submit" class="primary">Guardar registro</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="checklistDialog">
+    <form id="checklistForm" method="dialog">
+      <div class="dialog-head"><div><p class="eyebrow">BIOSEGURIDAD</p><h2>Inspección de terreno</h2></div><button class="icon-button close-dialog" type="button">×</button></div>
+      <div class="form-grid"><label>Operario<input name="operator" required></label><label>Área<select name="area"><option>Acopio peligroso</option><option>Acopio valorizable</option><option>Zona de carga</option></select></label></div>
+      <fieldset><legend>Complete los seis controles antes de continuar</legend>
+        <label class="safety-step"><input type="checkbox" name="step" value="EPP completo"><span class="step-icon">1</span><span><strong>EPP completo</strong><small>Guantes, protección ocular y calzado adecuados.</small></span></label>
+        <label class="safety-step"><input type="checkbox" name="step" value="Envases cerrados"><span class="step-icon">2</span><span><strong>Envases cerrados</strong><small>Sin filtraciones, roturas ni tapas faltantes.</small></span></label>
+        <label class="safety-step"><input type="checkbox" name="step" value="Segregación correcta"><span class="step-icon">3</span><span><strong>Segregación correcta</strong><small>Peligrosos separados de cartón y plásticos.</small></span></label>
+        <label class="safety-step"><input type="checkbox" name="step" value="Etiquetado visible"><span class="step-icon">4</span><span><strong>Etiquetado visible</strong><small>Categoría, fecha y lote legibles.</small></span></label>
+        <label class="safety-step"><input type="checkbox" name="step" value="Kit disponible"><span class="step-icon">5</span><span><strong>Kit de derrames disponible</strong><small>Completo y dentro de su vigencia.</small></span></label>
+        <label class="safety-step"><input type="checkbox" name="step" value="Área despejada"><span class="step-icon">6</span><span><strong>Área despejada</strong><small>Accesos libres y señalización visible.</small></span></label>
+      </fieldset>
+      <label>Observación<textarea name="notes" rows="2" maxlength="250"></textarea></label>
+      <div class="dialog-actions"><button type="button" class="secondary close-dialog">Cancelar</button><button type="submit" class="primary">Finalizar inspección</button></div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
