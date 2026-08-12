@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="circularidad.css">
   <link rel="stylesheet" href="barbecho.css">
+  <link rel="stylesheet" href="certificaciones.css">
 </head>
 <body>
   <aside class="sidebar">
@@ -21,7 +22,7 @@
       <button class="nav-item" data-view="trazabilidad"><span>⇄</span> Trazabilidad</button>
       <button class="nav-item" data-view="bioseguridad"><span>✓</span> Bioseguridad</button>
       <button class="nav-item" data-view="circularidad"><span>$</span> Costos y circularidad</button>
-      <button class="nav-item" data-view="retc"><span>▤</span> Reporte RETC</button>
+      <button class="nav-item" data-view="retc"><span>▤</span> Reporte certificaciones</button>
       <button class="nav-item" data-view="datos"><span>◫</span> Datos y control</button>
     </nav>
     <div class="side-note">
@@ -159,6 +160,15 @@
     </section>
 
     <section id="retc" class="view">
+      <div class="section-lead"><div><p>Diagnóstico de preparación construido con estadísticas y evidencias registradas en la plataforma.</p></div><button id="refreshCertifications" class="primary">Actualizar evaluación</button></div>
+      <div class="certification-notice"><strong>Evaluación orientativa</strong><span>La plataforma no otorga certificados ni acredita cumplimiento legal. La decisión corresponde a organismos certificadores y autoridades competentes.</span></div>
+      <div id="certificationSummary" class="kpi-grid"></div>
+      <div id="certificationCards" class="certification-grid"></div>
+      <article class="card certification-detail-card">
+        <div class="card-head"><div><p class="eyebrow">EVIDENCIA Y BRECHAS</p><h2>Fundamento de la evaluación</h2></div><button id="exportCertifications" class="secondary">Exportar informe JSON</button></div>
+        <div id="certificationEvidence" class="certification-evidence"></div>
+      </article>
+      <div class="legacy-retc-heading"><p class="eyebrow">ANEXO REGULATORIO</p><h2>Borrador RETC y revisión profesional</h2></div>
       <div class="retc-grid">
         <article class="card">
           <p class="eyebrow">BORRADOR ASISTIDO</p><h2>Consolidación RETC</h2>
@@ -257,5 +267,6 @@
   <script src="app.js"></script>
   <script src="circularidad.js"></script>
   <script src="barbecho.js"></script>
+  <script src="certificaciones.js"></script>
 </body>
 </html>
