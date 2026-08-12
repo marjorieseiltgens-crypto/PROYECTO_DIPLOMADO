@@ -86,6 +86,7 @@
 
     <section id="barbecho" class="view">
       <div class="section-lead"><div><p>Controle los líquidos de triple lavado, la evaporación y la capacidad máxima de 1.000 litros.</p></div><button class="primary" data-action="new-barbecho">+ Registrar día</button></div>
+      <div class="barbecho-edit-note"><span>i</span><p><strong>¿Cometió un error?</strong> Puede eliminar un registro desde la bitácora o limpiar solamente los datos del barbecho. No es necesario utilizar “Limpiar demo”. El nivel y las estimaciones se recalcularán automáticamente.</p></div>
       <div id="barbechoAlert" class="barbecho-alert" role="alert"></div>
       <div id="barbechoKpis" class="kpi-grid"></div>
       <div class="barbecho-grid">
@@ -108,8 +109,8 @@
         </article>
       </div>
       <article class="card">
-        <div class="card-head"><div><p class="eyebrow">BITÁCORA DEL BARBECHO</p><h2>Triple lavado y evaporación diaria</h2></div><button id="exportBarbechoCsv" class="secondary">Exportar CSV</button></div>
-        <div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Plaguicida</th><th>Agregado</th><th>Evaporado</th><th>Balance diario</th><th>Operario</th></tr></thead><tbody id="barbechoLogsBody"></tbody></table></div>
+        <div class="card-head"><div><p class="eyebrow">BITÁCORA DEL BARBECHO</p><h2>Triple lavado y evaporación diaria</h2></div><div class="barbecho-table-actions"><button id="exportBarbechoCsv" class="secondary">Exportar CSV</button><button id="clearBarbechoLogs" class="danger-button">Limpiar bitácora</button></div></div>
+        <div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Plaguicida</th><th>Agregado</th><th>Evaporado</th><th>Balance diario</th><th>Operario</th><th>Acción</th></tr></thead><tbody id="barbechoLogsBody"></tbody></table></div>
       </article>
     </section>
 

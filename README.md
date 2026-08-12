@@ -8,6 +8,8 @@ También incorpora un módulo exclusivo de barbecho químico con capacidad máxi
 
 El formulario de barbecho utiliza un catálogo local de 172 productos importados desde `Plaguicidas.xlsx`, con búsqueda y selección obligatoria para evitar diferencias de escritura entre operarios.
 
+Los registros erróneos del barbecho pueden eliminarse individualmente o mediante la limpieza exclusiva de su bitácora, sin borrar los datos de demostración ni afectar otros módulos.
+
 El Reporte Certificaciones realiza un diagnóstico orientativo de preparación para ISO 14001, aplicación de la guía ISO 26000 y cumplimiento de la Ley REP. Distingue expresamente entre certificación, guía voluntaria y obligación legal, y no sustituye auditorías ni pronunciamientos de autoridad.
 
 ## Uso
