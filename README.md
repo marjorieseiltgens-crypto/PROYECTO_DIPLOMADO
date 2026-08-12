@@ -6,7 +6,7 @@ Incluye un módulo de costos y circularidad para bandejas y macetas, con catálo
 
 También incorpora un módulo exclusivo de barbecho químico con capacidad máxima de 1.000 litros, registro diario de líquidos de triple lavado y tipo de plaguicida, control de evaporación, proyecciones semanales/mensuales y alertas preventivas desde 900 litros.
 
-El formulario de barbecho utiliza un catálogo local de 172 productos importados desde `Plaguicidas.xlsx`, con búsqueda y selección obligatoria para evitar diferencias de escritura entre operarios.
+El formulario de barbecho utiliza un catálogo local de 172 productos importados desde `Plaguicidas.xlsx`. El campo “Buscar producto” despliega la lista completa, filtra coincidencias mientras el operario escribe y selecciona automáticamente el producto elegido en el formulario.
 
 Los registros erróneos del barbecho pueden eliminarse individualmente o mediante la limpieza exclusiva de su bitácora, sin borrar los datos de demostración ni afectar otros módulos.
 

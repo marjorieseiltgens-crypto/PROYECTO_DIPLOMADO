@@ -38,7 +38,15 @@ function populatePesticides(query=''){
   if(matches.includes(current))select.value=current;
   $('#pesticideCatalogCount').textContent=`${matches.length} de ${PLAGUICIDAS_CATALOG.length} productos disponibles`;
 }
-function openBarbecho(){const f=$('#barbechoForm');f.reset();f.elements.date.value=new Date().toISOString().slice(0,10);f.elements.addedMl.value=0;f.elements.evaporatedMl.value=0;$('#pesticideSearch').value='';populatePesticides();$('#barbechoDialog').showModal()}
+function renderPesticideSuggestions(query=''){
+  const list=$('#pesticideSuggestions'),search=$('#pesticideSearch'),normalized=query.trim().toLocaleLowerCase('es');
+  const matches=PLAGUICIDAS_CATALOG.filter(name=>name.toLocaleLowerCase('es').includes(normalized));
+  list.innerHTML=matches.length?matches.map(name=>`<button type="button" class="product-suggestion" role="option" data-product-index="${PLAGUICIDAS_CATALOG.indexOf(name)}">${escapeHtml(name)}</button>`).join(''):'<span class="product-suggestions-empty">No se encontraron productos.</span>';
+  list.hidden=false;search.setAttribute('aria-expanded','true');
+}
+function hidePesticideSuggestions(){const list=$('#pesticideSuggestions');list.hidden=true;$('#pesticideSearch').setAttribute('aria-expanded','false')}
+function selectPesticide(name){const search=$('#pesticideSearch');search.value=name;populatePesticides(name);$('#pesticideSelect').value=name;hidePesticideSuggestions()}
+function openBarbecho(){const f=$('#barbechoForm');f.reset();f.elements.date.value=new Date().toISOString().slice(0,10);f.elements.addedMl.value=0;f.elements.evaporatedMl.value=0;$('#pesticideSearch').value='';populatePesticides();hidePesticideSuggestions();$('#barbechoDialog').showModal()}
 
 const buildAlertsBeforeBarbecho=buildAlerts;
 buildAlerts=function(){const list=buildAlertsBeforeBarbecho(),b=barbechoBalance();if(b.current>=BARBECHO_CAPACITY_ML)list.unshift({title:'Barbecho químico en nivel crítico',text:b.current>BARBECHO_CAPACITY_ML?`Excede la capacidad en ${fmtVolume(b.current-BARBECHO_CAPACITY_ML)}. Suspenda las adiciones.`:'Alcanzó los 1.000 L. No agregue más líquido.'});else if(b.current>=BARBECHO_WARNING_ML)list.unshift({title:'Barbecho químico próximo al límite',text:`Quedan ${fmtVolume(b.available)} antes de alcanzar los 1.000 L.`});return list};
@@ -46,7 +54,13 @@ const renderAllBeforeBarbecho=renderAll;
 renderAll=function(){ensureBarbechoState();renderAllBeforeBarbecho();renderBarbecho()};
 
 $$('[data-action="new-barbecho"]').forEach(b=>b.addEventListener('click',openBarbecho));
-$('#pesticideSearch').addEventListener('input',e=>populatePesticides(e.target.value));
+$('#pesticideSearch').addEventListener('focus',e=>renderPesticideSuggestions(e.target.value));
+$('#pesticideSearch').addEventListener('input',e=>{populatePesticides(e.target.value);renderPesticideSuggestions(e.target.value)});
+$('#pesticideSearch').addEventListener('keydown',e=>{if(e.key==='Escape')hidePesticideSuggestions()});
+$('#pesticideSuggestions').addEventListener('mousedown',e=>e.preventDefault());
+$('#pesticideSuggestions').addEventListener('click',e=>{const option=e.target.closest('[data-product-index]');if(option)selectPesticide(PLAGUICIDAS_CATALOG[Number(option.dataset.productIndex)])});
+$('#pesticideSelect').addEventListener('change',e=>{if(e.target.value)$('#pesticideSearch').value=e.target.value});
+document.addEventListener('click',e=>{if(!e.target.closest('.product-search-field'))hidePesticideSuggestions()});
 $('#barbechoLogsBody').addEventListener('click',e=>{const button=e.target.closest('[data-delete-barbecho]');if(!button)return;const record=state.barbechoLogs.find(l=>String(l.id)===button.dataset.deleteBarbecho);if(!record)return;if(!confirm(`¿Eliminar el registro de ${record.pesticide} del ${fmtDate(record.date+'T12:00')}?`))return;state.barbechoLogs=state.barbechoLogs.filter(l=>String(l.id)!==button.dataset.deleteBarbecho);saveState();toast('Registro eliminado y balance recalculado.')});
 $('#clearBarbechoLogs').addEventListener('click',()=>{ensureBarbechoState();if(!state.barbechoLogs.length)return toast('La bitácora del barbecho ya está vacía.');if(!confirm('¿Eliminar todos los registros del barbecho químico? Esta acción no afecta los demás módulos ni requiere Limpiar demo.'))return;state.barbechoLogs=[];saveState();toast('Bitácora del barbecho limpiada.')});
 $('#barbechoForm').addEventListener('submit',e=>{e.preventDefault();const d=Object.fromEntries(new FormData(e.target)),addedMl=Math.max(0,Number(d.addedMl)||0),evaporatedMl=Math.max(0,Number(d.evaporatedMl)||0);if(addedMl+evaporatedMl===0)return toast('Registre líquido agregado o evaporación del día.');ensureBarbechoState();state.barbechoLogs.push({...d,id:Date.now(),addedMl,evaporatedMl});state.demo=false;saveState();$('#barbechoDialog').close();const b=barbechoBalance();toast(b.current>=BARBECHO_WARNING_ML?'Registro guardado con alerta de capacidad.':'Balance diario registrado.')});
