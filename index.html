@@ -7,6 +7,7 @@
   <title>SynergiaBio | Trazabilidad sostenible</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="circularidad.css">
+  <link rel="stylesheet" href="barbecho.css">
 </head>
 <body>
   <aside class="sidebar">
@@ -16,6 +17,7 @@
     </a>
     <nav aria-label="Navegación principal">
       <button class="nav-item active" data-view="inicio"><span>⌂</span> Resumen</button>
+      <button class="nav-item" data-view="barbecho"><span>♨</span> Barbecho químico</button>
       <button class="nav-item" data-view="trazabilidad"><span>⇄</span> Trazabilidad</button>
       <button class="nav-item" data-view="bioseguridad"><span>✓</span> Bioseguridad</button>
       <button class="nav-item" data-view="circularidad"><span>$</span> Costos y circularidad</button>
@@ -79,6 +81,35 @@
           <small id="decisionLabel"></small>
         </article>
       </div>
+    </section>
+
+    <section id="barbecho" class="view">
+      <div class="section-lead"><div><p>Controle los líquidos de triple lavado, la evaporación y la capacidad máxima de 1.000 litros.</p></div><button class="primary" data-action="new-barbecho">+ Registrar día</button></div>
+      <div id="barbechoAlert" class="barbecho-alert" role="alert"></div>
+      <div id="barbechoKpis" class="kpi-grid"></div>
+      <div class="barbecho-grid">
+        <article class="card tank-card">
+          <div class="card-head"><div><p class="eyebrow">CAPACIDAD MÁXIMA 1.000 L</p><h2>Nivel estimado</h2></div><span id="barbechoStatus" class="pill success">Disponible</span></div>
+          <div class="tank-layout">
+            <div class="tank" aria-label="Nivel estimado del barbecho químico"><span id="tankFill"></span><strong id="tankPercent">0%</strong></div>
+            <div class="tank-detail"><strong id="tankLiters">0 L</strong><span>Volumen actual estimado</span><div class="capacity-scale"><span>0 L</span><span>900 L · alerta</span><span>1.000 L · máximo</span></div></div>
+          </div>
+          <div class="initial-volume">
+            <label>Volumen inicial conocido (litros)<input id="barbechoInitial" type="number" min="0" step="0.001" max="2000" value="0"></label>
+            <button id="saveBarbechoInitial" class="secondary">Guardar nivel inicial</button>
+          </div>
+          <p class="muted">Use el nivel inicial para incorporar el líquido que ya existe antes de comenzar la bitácora digital.</p>
+        </article>
+        <article class="card">
+          <div class="card-head"><div><p class="eyebrow">BALANCE DE EVAPORACIÓN</p><h2>Estimación operativa</h2></div></div>
+          <div id="evaporationSummary" class="evaporation-summary"></div>
+          <p class="privacy-note">La proyección semanal y mensual usa el promedio de los días con medición registrada. Es una estimación y no reemplaza una medición física del nivel.</p>
+        </article>
+      </div>
+      <article class="card">
+        <div class="card-head"><div><p class="eyebrow">BITÁCORA DEL BARBECHO</p><h2>Triple lavado y evaporación diaria</h2></div><button id="exportBarbechoCsv" class="secondary">Exportar CSV</button></div>
+        <div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Plaguicida</th><th>Agregado</th><th>Evaporado</th><th>Balance diario</th><th>Operario</th></tr></thead><tbody id="barbechoLogsBody"></tbody></table></div>
+      </article>
     </section>
 
     <section id="trazabilidad" class="view">
@@ -207,8 +238,24 @@
     </form>
   </dialog>
 
+  <dialog id="barbechoDialog">
+    <form id="barbechoForm" method="dialog">
+      <div class="dialog-head"><div><p class="eyebrow">BARBECHO QUÍMICO</p><h2>Registrar balance diario</h2></div><button class="icon-button close-dialog" type="button">×</button></div>
+      <div class="form-grid">
+        <label>Fecha<input name="date" type="date" required></label>
+        <label>Tipo de plaguicida<input name="pesticide" maxlength="100" placeholder="Ej.: Herbicida glifosato" required></label>
+        <label>Agregado por triple lavado (ml)<input name="addedMl" type="number" min="0" step="1" value="0" required></label>
+        <label>Disminución por evaporación (ml)<input name="evaporatedMl" type="number" min="0" step="1" value="0" required></label>
+        <label>Operario responsable<input name="operator" maxlength="60" required></label>
+      </div>
+      <label>Observaciones<textarea name="notes" rows="2" maxlength="250" placeholder="Condición observada, hora de medición u otra evidencia"></textarea></label>
+      <div class="dialog-actions"><button type="button" class="secondary close-dialog">Cancelar</button><button type="submit" class="primary">Guardar registro</button></div>
+    </form>
+  </dialog>
+
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <script src="app.js"></script>
   <script src="circularidad.js"></script>
+  <script src="barbecho.js"></script>
 </body>
 </html>

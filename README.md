@@ -4,6 +4,8 @@ Aplicación web local para registrar residuos, ejecutar controles de biosegurida
 
 Incluye un módulo de costos y circularidad para bandejas y macetas, con catálogo de precios en pesos chilenos, registro diario de unidades utilizadas, recicladas y desechadas, reportes mensuales/anuales y cálculo de pérdida y recuperación económica.
 
+También incorpora un módulo exclusivo de barbecho químico con capacidad máxima de 1.000 litros, registro diario de líquidos de triple lavado y tipo de plaguicida, control de evaporación, proyecciones semanales/mensuales y alertas preventivas desde 900 litros.
+
 ## Uso
 
 1. Abra `index.html` en Chrome, Edge o Firefox.
