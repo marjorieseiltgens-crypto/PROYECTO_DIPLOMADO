@@ -6,6 +6,8 @@ Incluye un módulo de costos y circularidad para bandejas y macetas, con catálo
 
 También incorpora un módulo exclusivo de barbecho químico con capacidad máxima de 1.000 litros, registro diario de líquidos de triple lavado y tipo de plaguicida, control de evaporación, proyecciones semanales/mensuales y alertas preventivas desde 900 litros.
 
+El formulario de barbecho utiliza un catálogo local de 172 productos importados desde `Plaguicidas.xlsx`, con búsqueda y selección obligatoria para evitar diferencias de escritura entre operarios.
+
 El Reporte Certificaciones realiza un diagnóstico orientativo de preparación para ISO 14001, aplicación de la guía ISO 26000 y cumplimiento de la Ley REP. Distingue expresamente entre certificación, guía voluntaria y obligación legal, y no sustituye auditorías ni pronunciamientos de autoridad.
 
 ## Uso

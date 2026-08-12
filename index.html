@@ -253,7 +253,8 @@
       <div class="dialog-head"><div><p class="eyebrow">BARBECHO QUÍMICO</p><h2>Registrar balance diario</h2></div><button class="icon-button close-dialog" type="button">×</button></div>
       <div class="form-grid">
         <label>Fecha<input name="date" type="date" required></label>
-        <label>Tipo de plaguicida<input name="pesticide" maxlength="100" placeholder="Ej.: Herbicida glifosato" required></label>
+        <label>Buscar producto<input id="pesticideSearch" type="search" placeholder="Escriba parte del nombre" autocomplete="off"></label>
+        <label>Plaguicida o producto<select name="pesticide" id="pesticideSelect" required><option value="">Seleccione un producto</option></select><small id="pesticideCatalogCount" class="field-help"></small></label>
         <label>Agregado por triple lavado (ml)<input name="addedMl" type="number" min="0" step="1" value="0" required></label>
         <label>Disminución por evaporación (ml)<input name="evaporatedMl" type="number" min="0" step="1" value="0" required></label>
         <label>Operario responsable<input name="operator" maxlength="60" required></label>
@@ -266,6 +267,7 @@
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <script src="app.js"></script>
   <script src="circularidad.js"></script>
+  <script src="plaguicidas.js"></script>
   <script src="barbecho.js"></script>
   <script src="certificaciones.js"></script>
 </body>

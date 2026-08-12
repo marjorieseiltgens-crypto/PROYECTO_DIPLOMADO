@@ -31,7 +31,14 @@ function renderBarbecho(){
   $('#evaporationSummary').innerHTML=[['Promedio diario',fmtVolume(b.dailyAverage)],['Estimado semanal',fmtVolume(b.weekly)],['Estimado mensual',fmtVolume(b.monthly)],['Espacio disponible',fmtVolume(b.available)]].map(([l,v],i)=>`<div class="evap-stat ${i===3?'available':''}"><strong>${v}</strong><span>${l}</span></div>`).join('');
   $('#barbechoLogsBody').innerHTML=[...state.barbechoLogs].sort((a,b)=>b.date.localeCompare(a.date)).map(l=>`<tr><td>${fmtDate(l.date+'T12:00')}</td><td><strong>${escapeHtml(l.pesticide)}</strong><small>${escapeHtml(l.notes||'Sin observaciones')}</small></td><td>${new Intl.NumberFormat('es-CL').format(l.addedMl)} ml</td><td>${new Intl.NumberFormat('es-CL').format(l.evaporatedMl)} ml</td><td>${l.addedMl-l.evaporatedMl>=0?'+':''}${new Intl.NumberFormat('es-CL').format(l.addedMl-l.evaporatedMl)} ml</td><td>${escapeHtml(l.operator)}</td></tr>`).join('')||'<tr><td colspan="6">Aún no hay registros diarios.</td></tr>';
 }
-function openBarbecho(){const f=$('#barbechoForm');f.reset();f.elements.date.value=new Date().toISOString().slice(0,10);f.elements.addedMl.value=0;f.elements.evaporatedMl.value=0;$('#barbechoDialog').showModal()}
+function populatePesticides(query=''){
+  const select=$('#pesticideSelect'),normalized=query.trim().toLocaleLowerCase('es'),current=select.value;
+  const matches=PLAGUICIDAS_CATALOG.filter(name=>name.toLocaleLowerCase('es').includes(normalized));
+  select.innerHTML='<option value="">Seleccione un producto</option>'+matches.map(name=>`<option value="${escapeHtml(name)}">${escapeHtml(name)}</option>`).join('');
+  if(matches.includes(current))select.value=current;
+  $('#pesticideCatalogCount').textContent=`${matches.length} de ${PLAGUICIDAS_CATALOG.length} productos disponibles`;
+}
+function openBarbecho(){const f=$('#barbechoForm');f.reset();f.elements.date.value=new Date().toISOString().slice(0,10);f.elements.addedMl.value=0;f.elements.evaporatedMl.value=0;$('#pesticideSearch').value='';populatePesticides();$('#barbechoDialog').showModal()}
 
 const buildAlertsBeforeBarbecho=buildAlerts;
 buildAlerts=function(){const list=buildAlertsBeforeBarbecho(),b=barbechoBalance();if(b.current>=BARBECHO_CAPACITY_ML)list.unshift({title:'Barbecho químico en nivel crítico',text:b.current>BARBECHO_CAPACITY_ML?`Excede la capacidad en ${fmtVolume(b.current-BARBECHO_CAPACITY_ML)}. Suspenda las adiciones.`:'Alcanzó los 1.000 L. No agregue más líquido.'});else if(b.current>=BARBECHO_WARNING_ML)list.unshift({title:'Barbecho químico próximo al límite',text:`Quedan ${fmtVolume(b.available)} antes de alcanzar los 1.000 L.`});return list};
@@ -39,8 +46,9 @@ const renderAllBeforeBarbecho=renderAll;
 renderAll=function(){ensureBarbechoState();renderAllBeforeBarbecho();renderBarbecho()};
 
 $$('[data-action="new-barbecho"]').forEach(b=>b.addEventListener('click',openBarbecho));
+$('#pesticideSearch').addEventListener('input',e=>populatePesticides(e.target.value));
 $('#barbechoForm').addEventListener('submit',e=>{e.preventDefault();const d=Object.fromEntries(new FormData(e.target)),addedMl=Math.max(0,Number(d.addedMl)||0),evaporatedMl=Math.max(0,Number(d.evaporatedMl)||0);if(addedMl+evaporatedMl===0)return toast('Registre líquido agregado o evaporación del día.');ensureBarbechoState();state.barbechoLogs.push({...d,id:Date.now(),addedMl,evaporatedMl});state.demo=false;saveState();$('#barbechoDialog').close();const b=barbechoBalance();toast(b.current>=BARBECHO_WARNING_ML?'Registro guardado con alerta de capacidad.':'Balance diario registrado.')});
 $('#saveBarbechoInitial').addEventListener('click',()=>{ensureBarbechoState();state.barbechoInitialMl=Math.max(0,Number($('#barbechoInitial').value)||0)*1000;state.demo=false;saveState();toast('Nivel inicial actualizado.')});
 $('#exportBarbechoCsv').addEventListener('click',()=>{ensureBarbechoState();const fields=['date','pesticide','addedMl','evaporatedMl','operator','notes'],csv=[['Fecha','Plaguicida','Agregado ml','Evaporado ml','Operario','Observaciones'].join(','),...state.barbechoLogs.map(r=>fields.map(f=>`"${String(r[f]??'').replaceAll('"','""')}"`).join(','))].join('\n');download('barbecho_quimico.csv','\ufeff'+csv,'text/csv;charset=utf-8')});
 
-ensureBarbechoState();renderAll();
+populatePesticides();ensureBarbechoState();renderAll();
