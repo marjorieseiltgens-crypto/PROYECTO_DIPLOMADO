@@ -6,6 +6,7 @@
   <meta name="description" content="MVP de gestión y trazabilidad sostenible de residuos para SynergiaBio">
   <title>SynergiaBio | Trazabilidad sostenible</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="circularidad.css">
 </head>
 <body>
   <aside class="sidebar">
@@ -17,6 +18,7 @@
       <button class="nav-item active" data-view="inicio"><span>⌂</span> Resumen</button>
       <button class="nav-item" data-view="trazabilidad"><span>⇄</span> Trazabilidad</button>
       <button class="nav-item" data-view="bioseguridad"><span>✓</span> Bioseguridad</button>
+      <button class="nav-item" data-view="circularidad"><span>$</span> Costos y circularidad</button>
       <button class="nav-item" data-view="retc"><span>▤</span> Reporte RETC</button>
       <button class="nav-item" data-view="datos"><span>◫</span> Datos y control</button>
     </nav>
@@ -96,6 +98,35 @@
       </article>
     </section>
 
+    <section id="circularidad" class="view">
+      <div class="section-lead"><div><p>Administre precios, consumo diario y recuperación económica de bandejas y macetas.</p></div><button class="primary" data-action="new-usage">+ Registrar uso diario</button></div>
+      <div id="circularKpis" class="kpi-grid"></div>
+      <div class="circular-grid">
+        <article class="card">
+          <div class="card-head"><div><p class="eyebrow">CATÁLOGO EN CLP</p><h2>Costos unitarios</h2></div><button id="savePrices" class="secondary">Guardar precios</button></div>
+          <p class="muted">Ingrese el costo de reposición por unidad. Los cálculos económicos se actualizarán automáticamente.</p>
+          <div id="priceCatalog" class="price-catalog"></div>
+        </article>
+        <article class="card">
+          <div class="card-head"><div><p class="eyebrow">REPORTE DEL PERÍODO</p><h2>Uso y valorización</h2></div></div>
+          <div class="period-controls">
+            <label>Vista<select id="periodMode"><option value="month">Mensual</option><option value="year">Anual</option></select></label>
+            <label id="monthField">Mes<input id="reportMonth" type="month"></label>
+            <label id="yearField" class="hidden">Año<input id="reportYear" type="number" min="2020" max="2100"></label>
+          </div>
+          <div id="percentageBars" class="percentage-bars"></div>
+        </article>
+      </div>
+      <article class="card circular-table-card">
+        <div class="card-head"><div><p class="eyebrow">DETALLE CONSOLIDADO</p><h2>Resultados por producto</h2></div><button id="exportCircularCsv" class="secondary">Exportar CSV</button></div>
+        <div class="table-wrap"><table><thead><tr><th>Producto</th><th>Costo unitario</th><th>Utilizadas</th><th>Recicladas</th><th>Desechadas</th><th>Pérdida</th><th>Recuperado</th></tr></thead><tbody id="circularBody"></tbody><tfoot id="circularFoot"></tfoot></table></div>
+      </article>
+      <article class="card">
+        <div class="card-head"><div><p class="eyebrow">BITÁCORA DIARIA</p><h2>Últimos registros</h2></div></div>
+        <div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Producto</th><th>Utilizadas</th><th>Recicladas</th><th>Desechadas</th><th>Responsable</th></tr></thead><tbody id="usageLogsBody"></tbody></table></div>
+      </article>
+    </section>
+
     <section id="retc" class="view">
       <div class="retc-grid">
         <article class="card">
@@ -160,7 +191,24 @@
     </form>
   </dialog>
 
+  <dialog id="usageDialog">
+    <form id="usageForm" method="dialog">
+      <div class="dialog-head"><div><p class="eyebrow">ECONOMÍA CIRCULAR</p><h2>Registrar movimiento diario</h2></div><button class="icon-button close-dialog" type="button">×</button></div>
+      <div class="form-grid">
+        <label>Fecha<input name="date" type="date" required></label>
+        <label>Producto<select name="productId" id="usageProduct" required></select></label>
+        <label>Unidades utilizadas<input name="used" type="number" min="0" step="1" value="0" required></label>
+        <label>Unidades recicladas<input name="recycled" type="number" min="0" step="1" value="0" required></label>
+        <label>Unidades desechadas<input name="discarded" type="number" min="0" step="1" value="0" required></label>
+        <label>Responsable<input name="operator" maxlength="60" required></label>
+      </div>
+      <label>Observaciones<textarea name="notes" rows="2" maxlength="250" placeholder="Motivo del descarte, destino del reciclaje u otra evidencia"></textarea></label>
+      <div class="dialog-actions"><button type="button" class="secondary close-dialog">Cancelar</button><button type="submit" class="primary">Guardar registro</button></div>
+    </form>
+  </dialog>
+
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <script src="app.js"></script>
+  <script src="circularidad.js"></script>
 </body>
 </html>

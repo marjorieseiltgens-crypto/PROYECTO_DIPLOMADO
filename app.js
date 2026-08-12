@@ -104,7 +104,7 @@ function renderChart(){
 }
 
 function renderAll(){ renderKpis();renderAlerts();renderActivity();renderRecords();renderChecklists();renderRetc();renderSources();requestAnimationFrame(renderChart); }
-function showView(id){ $$('.view').forEach(v=>v.classList.toggle('active',v.id===id)); $$('.nav-item').forEach(n=>n.classList.toggle('active',n.dataset.view===id)); const labels={inicio:'Resumen ejecutivo',trazabilidad:'Trazabilidad de residuos',bioseguridad:'Bioseguridad en terreno',retc:'Reporte RETC asistido',datos:'Datos y gobernanza'}; $('#pageTitle').textContent=labels[id]; $('.sidebar').classList.remove('open'); if(id==='inicio')requestAnimationFrame(renderChart); }
+function showView(id){ $$('.view').forEach(v=>v.classList.toggle('active',v.id===id)); $$('.nav-item').forEach(n=>n.classList.toggle('active',n.dataset.view===id)); const labels={inicio:'Resumen ejecutivo',trazabilidad:'Trazabilidad de residuos',bioseguridad:'Bioseguridad en terreno',circularidad:'Costos y circularidad',retc:'Reporte RETC asistido',datos:'Datos y gobernanza'}; $('#pageTitle').textContent=labels[id]; $('.sidebar').classList.remove('open'); if(id==='inicio')requestAnimationFrame(renderChart); }
 
 function openRecord(){ const f=$('#recordForm'); f.reset(); const d=new Date(Date.now()-new Date().getTimezoneOffset()*60000).toISOString().slice(0,16); f.elements.date.value=d; $('#classificationHint').classList.remove('visible'); $('#recordDialog').showModal(); }
 function openChecklist(){ const f=$('#checklistForm'); f.reset(); f.dataset.started=Date.now(); $('#checklistDialog').showModal(); }

@@ -2,6 +2,8 @@
 
 Aplicación web local para registrar residuos, ejecutar controles de bioseguridad, monitorear indicadores y generar un borrador RETC sujeto a revisión humana.
 
+Incluye un módulo de costos y circularidad para bandejas y macetas, con catálogo de precios en pesos chilenos, registro diario de unidades utilizadas, recicladas y desechadas, reportes mensuales/anuales y cálculo de pérdida y recuperación económica.
+
 ## Uso
 
 1. Abra `index.html` en Chrome, Edge o Firefox.
