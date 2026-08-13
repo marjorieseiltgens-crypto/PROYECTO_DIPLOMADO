@@ -4,6 +4,8 @@ Aplicación web local para registrar residuos, ejecutar controles de biosegurida
 
 Incluye un módulo de costos y circularidad para bandejas y macetas, con catálogo de precios en pesos chilenos, registro diario de unidades utilizadas, recicladas y desechadas, reportes mensuales/anuales y cálculo de pérdida y recuperación económica.
 
+Cada movimiento diario permite registrar los kilogramos eliminados por pérdida de macetas o bandejas. El peso se consolida por producto y período, se refleja en Trazabilidad y se incorpora en los archivos CSV.
+
 La vista Trazabilidad de residuos funciona como un resumen de consulta de esos registros de Costos y circularidad. Presenta totales, costos de descarte y recuperación, filtros y exportación CSV, sin permitir duplicar movimientos desde esa página.
 
 Cuando se registra un movimiento desde otros módulos, el selector de residuo ofrece solamente agroquímico vencido, los siete tamaños de macetas, las bandejas de 288, 144 y 72 alvéolos, y la opción Otro. Las macetas y bandejas se clasifican como valorizables.

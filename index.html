@@ -119,7 +119,7 @@
       <div id="traceabilityKpis" class="kpi-grid"></div>
       <article class="card">
         <div class="toolbar"><input id="recordSearch" type="search" placeholder="Buscar por producto o responsable"><select id="recordTypeFilter"><option value="all">Todos los productos</option><option value="Bandejas">Bandejas</option><option value="Macetas">Macetas</option></select><button id="exportCsv" class="secondary">Exportar resumen CSV</button></div>
-        <div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Producto</th><th>Utilizadas</th><th>Recicladas</th><th>Desechadas</th><th>Pérdida</th><th>Recuperado</th><th>Responsable</th></tr></thead><tbody id="recordsBody"></tbody></table></div>
+        <div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Producto</th><th>Utilizadas</th><th>Recicladas</th><th>Desechadas</th><th>Kg eliminados</th><th>Pérdida</th><th>Recuperado</th><th>Responsable</th></tr></thead><tbody id="recordsBody"></tbody></table></div>
       </article>
     </section>
 
@@ -153,11 +153,11 @@
       </div>
       <article class="card circular-table-card">
         <div class="card-head"><div><p class="eyebrow">DETALLE CONSOLIDADO</p><h2>Resultados por producto</h2></div><button id="exportCircularCsv" class="secondary">Exportar CSV</button></div>
-        <div class="table-wrap"><table><thead><tr><th>Producto</th><th>Costo unitario</th><th>Utilizadas</th><th>Recicladas</th><th>Desechadas</th><th>Pérdida</th><th>Recuperado</th></tr></thead><tbody id="circularBody"></tbody><tfoot id="circularFoot"></tfoot></table></div>
+        <div class="table-wrap"><table><thead><tr><th>Producto</th><th>Costo unitario</th><th>Utilizadas</th><th>Recicladas</th><th>Desechadas</th><th>Kg eliminados</th><th>Pérdida</th><th>Recuperado</th></tr></thead><tbody id="circularBody"></tbody><tfoot id="circularFoot"></tfoot></table></div>
       </article>
       <article class="card">
         <div class="card-head"><div><p class="eyebrow">BITÁCORA DIARIA</p><h2>Últimos registros</h2></div></div>
-        <div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Producto</th><th>Utilizadas</th><th>Recicladas</th><th>Desechadas</th><th>Responsable</th></tr></thead><tbody id="usageLogsBody"></tbody></table></div>
+        <div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Producto</th><th>Utilizadas</th><th>Recicladas</th><th>Desechadas</th><th>Kg eliminados</th><th>Responsable</th></tr></thead><tbody id="usageLogsBody"></tbody></table></div>
       </article>
     </section>
 
@@ -243,6 +243,7 @@
         <label>Unidades utilizadas<input name="used" type="number" min="0" step="1" value="0" required></label>
         <label>Unidades recicladas<input name="recycled" type="number" min="0" step="1" value="0" required></label>
         <label>Unidades desechadas<input name="discarded" type="number" min="0" step="1" value="0" required></label>
+        <label>Kilogramos eliminados por pérdida<input name="discardedKg" type="number" min="0" step="0.001" value="0" required></label>
         <label>Responsable<input name="operator" maxlength="60" required></label>
       </div>
       <label>Observaciones<textarea name="notes" rows="2" maxlength="250" placeholder="Motivo del descarte, destino del reciclaje u otra evidencia"></textarea></label>
@@ -267,8 +268,8 @@
   </dialog>
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
-  <script src="app.js"></script>
-  <script src="circularidad.js"></script>
+  <script src="app.js?v=20260813-kg"></script>
+  <script src="circularidad.js?v=20260813-kg"></script>
   <script src="plaguicidas.js"></script>
   <script src="barbecho.js"></script>
   <script src="certificaciones.js"></script>
