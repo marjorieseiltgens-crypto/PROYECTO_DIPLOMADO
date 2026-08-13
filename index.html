@@ -141,8 +141,8 @@
       <div id="circularKpis" class="kpi-grid"></div>
       <div class="circular-grid">
         <article class="card">
-          <div class="card-head"><div><p class="eyebrow">CATÁLOGO EN CLP</p><h2>Costos unitarios</h2></div><button id="savePrices" class="secondary">Guardar precios</button></div>
-          <p class="muted">Ingrese el costo de reposición por unidad. Los cálculos económicos se actualizarán automáticamente.</p>
+          <div class="card-head"><div><p class="eyebrow">CATÁLOGO EN CLP</p><h2>Costos y retorno del reciclaje</h2></div><button id="savePrices" class="secondary">Guardar valores</button></div>
+          <p class="muted">Ingrese el costo de reposición y el dinero recibido por reciclar una unidad. Así se separan compras evitadas e ingresos reales.</p>
           <div id="priceCatalog" class="price-catalog"></div>
         </article>
         <article class="card">
@@ -166,7 +166,7 @@
     </section>
 
     <section id="perdidas" class="view">
-      <div class="section-lead"><div><p>Cuantifique en pesos chilenos el impacto económico del descarte de bandejas y macetas.</p><small class="trace-source-note">Los resultados se calculan automáticamente con los costos y movimientos de “Costos y circularidad”.</small></div><button id="exportLossesCsv" class="secondary">Exportar análisis CSV</button></div>
+      <div class="section-lead"><div><p>Cuantifique en pesos chilenos cuánto pierde, ahorra y gana la empresa con bandejas y macetas.</p><small class="trace-source-note">El ahorro corresponde a compras evitadas; la ganancia corresponde al ingreso registrado por el reciclaje.</small></div><button id="exportLossesCsv" class="secondary">Exportar análisis CSV</button></div>
       <article class="card loss-period-card">
         <div class="period-controls loss-period-controls">
           <label>Vista<select id="lossPeriodMode"><option value="month">Mensual</option><option value="year">Anual</option><option value="all">Histórica</option></select></label>
@@ -187,7 +187,7 @@
       </div>
       <article class="card">
         <div class="card-head"><div><p class="eyebrow">PRIORIZACIÓN ECONÓMICA</p><h2>Pérdida por producto</h2></div></div>
-        <div class="table-wrap"><table><thead><tr><th>Producto</th><th>Grupo</th><th>Costo unitario</th><th>Desechadas</th><th>Kg eliminados</th><th>Pérdida bruta</th><th>Valor recuperado</th><th>Pérdida neta</th><th>Prioridad</th></tr></thead><tbody id="lossProductsBody"></tbody><tfoot id="lossProductsFoot"></tfoot></table></div>
+        <div class="table-wrap"><table><thead><tr><th>Producto</th><th>Grupo</th><th>Costo unitario</th><th>Desechadas</th><th>Kg eliminados</th><th>Pérdida bruta</th><th>Ahorro al reciclar</th><th>Ganancia</th><th>Pérdida neta</th><th>Prioridad</th></tr></thead><tbody id="lossProductsBody"></tbody><tfoot id="lossProductsFoot"></tfoot></table></div>
       </article>
     </section>
 
@@ -337,11 +337,11 @@
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <script src="app.js?v=20260813-sin-material-retirado"></script>
-  <script src="circularidad.js?v=20260813-kg"></script>
+  <script src="circularidad.js?v=20260813-retorno"></script>
   <script src="plaguicidas.js"></script>
   <script src="barbecho.js"></script>
   <script src="certificaciones.js?v=20260813-sin-material-retirado"></script>
   <script src="emisiones.js?v=20260813"></script>
-  <script src="perdidas.js?v=20260813-2"></script>
+  <script src="perdidas.js?v=20260813-3"></script>
 </body>
 </html>

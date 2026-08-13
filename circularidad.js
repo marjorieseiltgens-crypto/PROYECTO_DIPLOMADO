@@ -13,6 +13,7 @@ const CIRCULAR_PRODUCTS = [
 
 function ensureCircularState(){
   if(!state.productCosts) state.productCosts=Object.fromEntries(CIRCULAR_PRODUCTS.map(p=>[p.id,0]));
+  if(!state.recyclingValues) state.recyclingValues=Object.fromEntries(CIRCULAR_PRODUCTS.map(p=>[p.id,0]));
   if(!state.usageLogs) state.usageLogs=[];
 }
 function fmtClp(n){return new Intl.NumberFormat('es-CL',{style:'currency',currency:'CLP',maximumFractionDigits:0}).format(n||0)}
@@ -29,7 +30,7 @@ function circularSummary(){
 }
 function renderCircularity(){
   ensureCircularState();if(!$('#priceCatalog'))return;
-  $('#priceCatalog').innerHTML=CIRCULAR_PRODUCTS.map(p=>`<label class="price-item"><span>${escapeHtml(p.name)}</span><span class="price-input-wrap"><input class="product-price" data-product="${p.id}" type="number" min="0" step="1" value="${Number(state.productCosts[p.id]||0)}" aria-label="Costo de ${escapeHtml(p.name)}"></span></label>`).join('');
+  $('#priceCatalog').innerHTML=CIRCULAR_PRODUCTS.map(p=>`<div class="price-item"><strong>${escapeHtml(p.name)}</strong><div class="price-fields"><label><small>Costo reposición</small><span class="price-input-wrap"><input class="product-price" data-product="${p.id}" type="number" min="0" step="1" value="${Number(state.productCosts[p.id]||0)}" aria-label="Costo de reposición de ${escapeHtml(p.name)}"></span></label><label><small>Retorno reciclaje</small><span class="price-input-wrap"><input class="recycling-value" data-product="${p.id}" type="number" min="0" step="1" value="${Number(state.recyclingValues[p.id]||0)}" aria-label="Ingreso por reciclar ${escapeHtml(p.name)}"></span></label></div></div>`).join('');
   $('#usageProduct').innerHTML=CIRCULAR_PRODUCTS.map(p=>`<option value="${p.id}">${escapeHtml(p.group)} · ${escapeHtml(p.name)}</option>`).join('');
   const {rows,totals,all}=circularSummary(),pct=n=>all?n/all*100:0;
   $('#circularKpis').innerHTML=[['Utilizadas',totals.used,'Unidades del período'],['Recicladas',totals.recycled,pct(totals.recycled).toFixed(1)+'% del total'],['Pérdida por descarte',fmtClp(totals.loss),`${totals.discarded} unidades · ${fmtDiscardedKg(totals.discardedKg)} eliminados`],['Valor recuperado',fmtClp(totals.recovered),totals.recycled+' unidades']].map(([l,v,s])=>`<article class="kpi"><div class="kpi-value">${v}</div><div class="kpi-label">${l}</div><div class="kpi-trend">${s}</div></article>`).join('');
@@ -45,7 +46,7 @@ $('#reportMonth').value=`${currentReportDate.getFullYear()}-${String(currentRepo
 $('#reportYear').value=currentReportDate.getFullYear();
 $$('[data-action="new-usage"]').forEach(b=>b.addEventListener('click',openUsage));
 $('#usageForm').addEventListener('submit',e=>{e.preventDefault();const d=Object.fromEntries(new FormData(e.target)),used=Math.max(0,Number(d.used)||0),recycled=Math.max(0,Number(d.recycled)||0),discarded=Math.max(0,Number(d.discarded)||0),discardedKg=Math.max(0,Number(d.discardedKg)||0);if(used+recycled+discarded+discardedKg===0)return toast('Registre al menos una unidad o los kilogramos eliminados.');ensureCircularState();state.usageLogs.push({...d,id:Date.now(),used,recycled,discarded,discardedKg});state.demo=false;saveState();renderCircularity();$('#usageDialog').close();toast('Movimiento diario registrado.')});
-$('#savePrices').addEventListener('click',()=>{ensureCircularState();$$('.product-price').forEach(i=>state.productCosts[i.dataset.product]=Math.max(0,Number(i.value)||0));saveState();renderCircularity();toast('Costos unitarios actualizados.')});
+$('#savePrices').addEventListener('click',()=>{ensureCircularState();$$('.product-price').forEach(i=>state.productCosts[i.dataset.product]=Math.max(0,Number(i.value)||0));$$('.recycling-value').forEach(i=>state.recyclingValues[i.dataset.product]=Math.max(0,Number(i.value)||0));saveState();renderCircularity();toast('Costos y retornos de reciclaje actualizados.')});
 $('#periodMode').addEventListener('change',e=>{$('#monthField').classList.toggle('hidden',e.target.value!=='month');$('#yearField').classList.toggle('hidden',e.target.value!=='year');renderCircularity()});
 $('#reportMonth').addEventListener('change',renderCircularity);$('#reportYear').addEventListener('change',renderCircularity);
 $('#exportCircularCsv').addEventListener('click',()=>{const {rows}=circularSummary(),header='Producto,Costo unitario,Utilizadas,Recicladas,Desechadas,Kg eliminados,Perdida CLP,Recuperado CLP',csv=[header,...rows.map(r=>[r.name,r.cost,r.used,r.recycled,r.discarded,r.discardedKg,r.loss,r.recovered].map(v=>`"${String(v).replaceAll('"','""')}"`).join(','))].join('\n');download('reporte_circularidad.csv','\ufeff'+csv,'text/csv;charset=utf-8')});
