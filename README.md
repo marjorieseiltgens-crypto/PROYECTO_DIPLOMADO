@@ -12,6 +12,8 @@ Cuando se registra un movimiento desde otros módulos, el selector de residuo of
 
 La aplicación depura automáticamente los registros históricos que ya no pertenecen al inventario ambiental definido para esta versión.
 
+El menú incorpora una vista independiente de Emisiones RETC debajo de Reporte certificaciones. Permite registrar fuente, sustancia, medio receptor, cantidad en kilogramos, método de cuantificación, responsable y estado de revisión; además consolida indicadores y exporta la bitácora en CSV. Es un control interno y no realiza declaraciones automáticas.
+
 También incorpora un módulo exclusivo de barbecho químico con capacidad máxima de 1.000 litros, registro diario de líquidos de triple lavado y tipo de plaguicida, control de evaporación, proyecciones semanales/mensuales y alertas preventivas desde 900 litros.
 
 El formulario de barbecho utiliza un catálogo local de 172 productos importados desde `Plaguicidas.xlsx`. El campo “Buscar producto” despliega la lista completa, filtra coincidencias mientras el operario escribe y selecciona automáticamente el producto elegido en el formulario.

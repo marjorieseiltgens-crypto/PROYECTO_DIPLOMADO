@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="circularidad.css">
   <link rel="stylesheet" href="barbecho.css">
   <link rel="stylesheet" href="certificaciones.css">
+  <link rel="stylesheet" href="emisiones.css">
 </head>
 <body>
   <aside class="sidebar">
@@ -23,6 +24,7 @@
       <button class="nav-item" data-view="bioseguridad"><span>✓</span> Bioseguridad</button>
       <button class="nav-item" data-view="circularidad"><span>$</span> Costos y circularidad</button>
       <button class="nav-item" data-view="retc"><span>▤</span> Reporte certificaciones</button>
+      <button class="nav-item" data-view="emisiones"><span>≋</span> Emisiones RETC</button>
       <button class="nav-item" data-view="datos"><span>◫</span> Datos y control</button>
     </nav>
     <div class="side-note">
@@ -189,6 +191,26 @@
       <article class="card"><div class="card-head"><div><p class="eyebrow">VISTA PREVIA</p><h2>Campos consolidados</h2></div></div><pre id="retcPreview">Genere un borrador para visualizar la consolidación.</pre></article>
     </section>
 
+    <section id="emisiones" class="view">
+      <div class="section-lead"><div><p>Consolide las emisiones y transferencias que podrían formar parte de una declaración RETC.</p><small class="trace-source-note">Registro interno sujeto a revisión del encargado ambiental antes de cualquier declaración oficial.</small></div><button class="primary" data-action="new-emission">+ Registrar emisión</button></div>
+      <div id="emissionKpis" class="kpi-grid"></div>
+      <div class="emissions-grid">
+        <article class="card">
+          <div class="card-head"><div><p class="eyebrow">DISTRIBUCIÓN POR MEDIO</p><h2>Emisiones consolidadas</h2></div></div>
+          <div id="emissionDistribution" class="emission-distribution"></div>
+        </article>
+        <article class="card emission-guidance">
+          <p class="eyebrow">CONTROL RETC</p><h2>Revisión antes de declarar</h2>
+          <ul><li>Confirmar la sustancia, unidad y período informado.</li><li>Respaldar la medición, cálculo o estimación utilizada.</li><li>Validar la aplicabilidad normativa y el establecimiento correspondiente.</li><li>No se realizan envíos automáticos desde esta plataforma.</li></ul>
+        </article>
+      </div>
+      <article class="card">
+        <div class="card-head"><div><p class="eyebrow">BITÁCORA DE EMISIONES</p><h2>Registros RETC</h2></div><button id="exportEmissionsCsv" class="secondary">Exportar CSV</button></div>
+        <div class="toolbar emission-toolbar"><input id="emissionSearch" type="search" placeholder="Buscar por fuente, sustancia o responsable"><select id="emissionMediumFilter"><option value="all">Todos los medios</option><option value="Aire">Aire</option><option value="Agua">Agua</option><option value="Suelo">Suelo</option><option value="Transferencia">Transferencia</option></select></div>
+        <div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Fuente</th><th>Sustancia</th><th>Medio</th><th>Cantidad</th><th>Método</th><th>Responsable</th><th>Estado</th></tr></thead><tbody id="emissionsBody"></tbody></table></div>
+      </article>
+    </section>
+
     <section id="datos" class="view">
       <div class="data-grid">
         <article class="card"><p class="eyebrow">GOBERNANZA</p><h2>Estado de las fuentes</h2><div id="sourcesList"></div></article>
@@ -267,11 +289,30 @@
     </form>
   </dialog>
 
+  <dialog id="emissionDialog">
+    <form id="emissionForm" method="dialog">
+      <div class="dialog-head"><div><p class="eyebrow">EMISIONES RETC</p><h2>Registrar emisión o transferencia</h2></div><button class="icon-button close-dialog" type="button">×</button></div>
+      <div class="form-grid">
+        <label>Fecha<input name="date" type="date" required></label>
+        <label>Medio receptor<select name="medium" required><option value="Aire">Aire</option><option value="Agua">Agua</option><option value="Suelo">Suelo</option><option value="Transferencia">Transferencia fuera del establecimiento</option></select></label>
+        <label>Fuente o proceso<input name="source" maxlength="100" placeholder="Ej.: Caldera, aplicación, descarga" required></label>
+        <label>Sustancia o contaminante<input name="pollutant" maxlength="100" required></label>
+        <label>Cantidad emitida (kg)<input name="amountKg" type="number" min="0.001" step="0.001" required></label>
+        <label>Método de cuantificación<select name="method" required><option value="Medición">Medición</option><option value="Cálculo">Cálculo</option><option value="Estimación">Estimación</option></select></label>
+        <label>Responsable<input name="operator" maxlength="60" required></label>
+        <label>Estado<select name="status" required><option value="Pendiente de revisión">Pendiente de revisión</option><option value="Verificado internamente">Verificado internamente</option></select></label>
+      </div>
+      <label>Observaciones y respaldo<textarea name="notes" rows="3" maxlength="300" placeholder="Equipo, factor de emisión, informe de laboratorio u otra evidencia"></textarea></label>
+      <div class="dialog-actions"><button type="button" class="secondary close-dialog">Cancelar</button><button type="submit" class="primary">Guardar emisión</button></div>
+    </form>
+  </dialog>
+
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <script src="app.js?v=20260813-sin-material-retirado"></script>
   <script src="circularidad.js?v=20260813-kg"></script>
   <script src="plaguicidas.js"></script>
   <script src="barbecho.js"></script>
   <script src="certificaciones.js?v=20260813-sin-material-retirado"></script>
+  <script src="emisiones.js?v=20260813"></script>
 </body>
 </html>
