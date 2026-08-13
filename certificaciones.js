@@ -10,7 +10,7 @@ function certificationAssessment(){
   const iso14001Score=Math.round(environmentalEvidence.filter(Boolean).length/environmentalEvidence.length*70);
   const iso26000Evidence=[records.length>0,checks.length>0,circularMovements,barbecho.length>0,state.approvals?.length>0];
   const iso26000Score=Math.round(iso26000Evidence.filter(Boolean).length/iso26000Evidence.length*55);
-  const repEvidence=[records.length>0,records.some(r=>/envase|embalaje|plástico|cartón|aceite|batería|pila|neumático|textil/i.test(r.waste)),records.some(r=>r.movement==='Valorización'),circularMovements];
+  const repEvidence=[records.length>0,records.some(r=>/envase|embalaje|plástico|aceite|batería|pila|neumático|textil/i.test(r.waste)),records.some(r=>r.movement==='Valorización'),circularMovements];
   const repScore=Math.round(repEvidence.filter(Boolean).length/repEvidence.length*60);
   return [
     {id:'iso14001',name:'ISO 14001',type:'Certificación de sistema ambiental',score:iso14001Score,canCertify:true,status:iso14001Score>=70?'Preparación alta':'Aún no demostrable',description:'La plataforma aporta trazabilidad ambiental, controles operacionales e indicadores. La certificación requiere implementar el SGA completo y una auditoría independiente.',evidence:`${records.length} movimientos, ${checks.length} inspecciones, ${(traceability*100).toFixed(0)}% de registros sin observación y ${usage.length} registros de circularidad.`,missing:'Política y objetivos ambientales aprobados; contexto y partes interesadas; matriz legal; riesgos y oportunidades; competencia; auditoría interna; revisión por la dirección; acciones correctivas; auditoría de organismo certificador.'},
