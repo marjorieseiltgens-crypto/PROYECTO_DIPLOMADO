@@ -30,7 +30,7 @@ function saveState(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); 
 function fmtKg(n){ return new Intl.NumberFormat('es-CL',{maximumFractionDigits:1}).format(n)+' kg'; }
 function fmtDate(s,withTime=false){ const d=new Date(s); return new Intl.DateTimeFormat('es-CL',withTime?{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}:{day:'2-digit',month:'short',year:'numeric'}).format(d); }
 function escapeHtml(v=''){ const el=document.createElement('div'); el.textContent=v; return el.innerHTML; }
-function classifyWaste(waste){ return /plaguicida|agroquímico/i.test(waste)?'peligroso':/maceta|cartón/i.test(waste)?'valorizable':'otro'; }
+function classifyWaste(waste){ return /agroquímico/i.test(waste)?'peligroso':/maceta|bandeja/i.test(waste)?'valorizable':'otro'; }
 function download(name,content,type='application/json'){ const blob=new Blob([content],{type}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=name; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),500); }
 function toast(message){ const t=$('#toast'); t.textContent=message; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2600); }
 

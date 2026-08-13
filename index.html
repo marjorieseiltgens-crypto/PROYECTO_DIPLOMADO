@@ -204,14 +204,14 @@
       <div class="form-grid">
         <label>Fecha y hora<input name="date" type="datetime-local" required></label>
         <label>Movimiento<select name="movement" required><option value="Ingreso">Ingreso</option><option value="Salida">Salida</option><option value="Valorización">Valorización</option></select></label>
-        <label>Residuo<select name="waste" required><option value="Envases de plaguicidas">Envases de plaguicidas</option><option value="Agroquímico vencido">Agroquímico vencido</option><option value="Macetas plásticas">Macetas plásticas</option><option value="Cartón">Cartón</option><option value="Otro">Otro</option></select></label>
+        <label>Residuo<select name="waste" required><option value="Agroquímico vencido">Agroquímico vencido</option><optgroup label="Macetas"><option value="Maceta de 0,5 litros">Maceta de 0,5 litros</option><option value="Maceta de 0,6 litros">Maceta de 0,6 litros</option><option value="Maceta de 0,750 cc">Maceta de 0,750 cc</option><option value="Maceta de 1 litro">Maceta de 1 litro</option><option value="Maceta de 1,5 litros">Maceta de 1,5 litros</option><option value="Maceta de 2 litros">Maceta de 2 litros</option><option value="Maceta de 25 litros">Maceta de 25 litros</option></optgroup><optgroup label="Bandejas"><option value="Bandeja de 288 alvéolos">Bandeja de 288 alvéolos</option><option value="Bandeja de 144 alvéolos">Bandeja de 144 alvéolos</option><option value="Bandeja de 72 alvéolos">Bandeja de 72 alvéolos</option></optgroup><option value="Otro">Otro</option></select></label>
         <label>Cantidad (kg)<input name="kg" type="number" min="0.01" step="0.01" required></label>
         <label>Lote o referencia<input name="batch" maxlength="40" placeholder="Ej.: PLG-2026-018" required></label>
         <label>Destino<select name="destination" required><option>Acopio peligroso</option><option>Acopio valorizable</option><option>Gestor autorizado</option><option>Reutilización interna</option></select></label>
         <label>Responsable<input name="operator" maxlength="60" required></label>
         <label>Estado del residuo<select name="condition"><option>Segregado</option><option>En observación</option><option>Conforme para retiro</option></select></label>
       </div>
-      <label>Observaciones<textarea name="notes" rows="3" maxlength="300" placeholder="Condición del envase, evidencia o incidencia"></textarea></label>
+      <label>Observaciones<textarea name="notes" rows="3" maxlength="300" placeholder="Condición del residuo, evidencia o incidencia"></textarea></label>
       <div id="classificationHint" class="ai-hint"></div>
       <div class="dialog-actions"><button type="button" class="secondary close-dialog">Cancelar</button><button type="submit" class="primary">Guardar registro</button></div>
     </form>
