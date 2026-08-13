@@ -4,6 +4,8 @@ Aplicación web local para registrar residuos, ejecutar controles de biosegurida
 
 Incluye un módulo de costos y circularidad para bandejas y macetas, con catálogo de precios en pesos chilenos, registro diario de unidades utilizadas, recicladas y desechadas, reportes mensuales/anuales y cálculo de pérdida y recuperación económica.
 
+La vista Trazabilidad de residuos funciona como un resumen de consulta de esos registros de Costos y circularidad. Presenta totales, costos de descarte y recuperación, filtros y exportación CSV, sin permitir duplicar movimientos desde esa página.
+
 También incorpora un módulo exclusivo de barbecho químico con capacidad máxima de 1.000 litros, registro diario de líquidos de triple lavado y tipo de plaguicida, control de evaporación, proyecciones semanales/mensuales y alertas preventivas desde 900 litros.
 
 El formulario de barbecho utiliza un catálogo local de 172 productos importados desde `Plaguicidas.xlsx`. El campo “Buscar producto” despliega la lista completa, filtra coincidencias mientras el operario escribe y selecciona automáticamente el producto elegido en el formulario.

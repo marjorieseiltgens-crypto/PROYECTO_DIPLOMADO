@@ -115,10 +115,11 @@
     </section>
 
     <section id="trazabilidad" class="view">
-      <div class="section-lead"><div><p>Registre cada ingreso, salida y valorización con responsable y evidencia.</p></div><button class="primary" data-action="new-record">+ Nuevo movimiento</button></div>
+      <div class="section-lead"><div><p>Resumen automático de las bandejas y macetas registradas en Costos y circularidad.</p><small class="trace-source-note">Esta página es solo de consulta. Para agregar información utilice “Costos y circularidad”.</small></div></div>
+      <div id="traceabilityKpis" class="kpi-grid"></div>
       <article class="card">
-        <div class="toolbar"><input id="recordSearch" type="search" placeholder="Buscar por residuo, lote o responsable"><select id="recordTypeFilter"><option value="all">Todos los residuos</option><option value="peligroso">Peligrosos</option><option value="valorizable">Valorizables</option><option value="otro">Otros</option></select><button id="exportCsv" class="secondary">Exportar CSV</button></div>
-        <div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Movimiento</th><th>Residuo</th><th>Cantidad</th><th>Destino</th><th>Responsable</th><th>Estado</th></tr></thead><tbody id="recordsBody"></tbody></table></div>
+        <div class="toolbar"><input id="recordSearch" type="search" placeholder="Buscar por producto o responsable"><select id="recordTypeFilter"><option value="all">Todos los productos</option><option value="Bandejas">Bandejas</option><option value="Macetas">Macetas</option></select><button id="exportCsv" class="secondary">Exportar resumen CSV</button></div>
+        <div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Producto</th><th>Utilizadas</th><th>Recicladas</th><th>Desechadas</th><th>Pérdida</th><th>Recuperado</th><th>Responsable</th></tr></thead><tbody id="recordsBody"></tbody></table></div>
       </article>
     </section>
 
