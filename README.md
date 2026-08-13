@@ -14,6 +14,8 @@ La aplicación depura automáticamente los registros históricos que ya no perte
 
 El menú incorpora una vista independiente de Emisiones RETC debajo de Reporte certificaciones. Permite registrar fuente, sustancia, medio receptor, cantidad en kilogramos, método de cuantificación, responsable y estado de revisión; además consolida indicadores y exporta la bitácora en CSV. Es un control interno y no realiza declaraciones automáticas.
 
+La vista Pérdidas económicas, ubicada debajo de Costos y circularidad, cuantifica en pesos chilenos la pérdida bruta por descarte, el valor recuperado por reciclaje y la pérdida neta. Compara bandejas y macetas, prioriza los productos de mayor impacto y genera recomendaciones operativas basadas en los datos registrados.
+
 También incorpora un módulo exclusivo de barbecho químico con capacidad máxima de 1.000 litros, registro diario de líquidos de triple lavado y tipo de plaguicida, control de evaporación, proyecciones semanales/mensuales y alertas preventivas desde 900 litros.
 
 El formulario de barbecho utiliza un catálogo local de 172 productos importados desde `Plaguicidas.xlsx`. El campo “Buscar producto” despliega la lista completa, filtra coincidencias mientras el operario escribe y selecciona automáticamente el producto elegido en el formulario.

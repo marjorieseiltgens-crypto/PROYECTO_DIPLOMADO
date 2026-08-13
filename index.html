@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="barbecho.css">
   <link rel="stylesheet" href="certificaciones.css">
   <link rel="stylesheet" href="emisiones.css">
+  <link rel="stylesheet" href="perdidas.css">
 </head>
 <body>
   <aside class="sidebar">
@@ -23,6 +24,7 @@
       <button class="nav-item" data-view="trazabilidad"><span>⇄</span> Trazabilidad</button>
       <button class="nav-item" data-view="bioseguridad"><span>✓</span> Bioseguridad</button>
       <button class="nav-item" data-view="circularidad"><span>$</span> Costos y circularidad</button>
+      <button class="nav-item" data-view="perdidas"><span>↘</span> Pérdidas económicas</button>
       <button class="nav-item" data-view="retc"><span>▤</span> Reporte certificaciones</button>
       <button class="nav-item" data-view="emisiones"><span>≋</span> Emisiones RETC</button>
       <button class="nav-item" data-view="datos"><span>◫</span> Datos y control</button>
@@ -160,6 +162,32 @@
       <article class="card">
         <div class="card-head"><div><p class="eyebrow">BITÁCORA DIARIA</p><h2>Últimos registros</h2></div></div>
         <div class="table-wrap"><table><thead><tr><th>Fecha</th><th>Producto</th><th>Utilizadas</th><th>Recicladas</th><th>Desechadas</th><th>Kg eliminados</th><th>Responsable</th></tr></thead><tbody id="usageLogsBody"></tbody></table></div>
+      </article>
+    </section>
+
+    <section id="perdidas" class="view">
+      <div class="section-lead"><div><p>Cuantifique en pesos chilenos el impacto económico del descarte de bandejas y macetas.</p><small class="trace-source-note">Los resultados se calculan automáticamente con los costos y movimientos de “Costos y circularidad”.</small></div><button id="exportLossesCsv" class="secondary">Exportar análisis CSV</button></div>
+      <article class="card loss-period-card">
+        <div class="period-controls loss-period-controls">
+          <label>Vista<select id="lossPeriodMode"><option value="month">Mensual</option><option value="year">Anual</option><option value="all">Histórica</option></select></label>
+          <label id="lossMonthField">Mes<input id="lossReportMonth" type="month"></label>
+          <label id="lossYearField" class="hidden">Año<input id="lossReportYear" type="number" min="2020" max="2100"></label>
+        </div>
+      </article>
+      <div id="lossKpis" class="kpi-grid"></div>
+      <div class="loss-analysis-grid">
+        <article class="card">
+          <div class="card-head"><div><p class="eyebrow">IMPACTO POR CATEGORÍA</p><h2>Bandejas versus macetas</h2></div></div>
+          <div id="lossGroupComparison" class="loss-group-comparison"></div>
+        </article>
+        <article class="card decision-panel">
+          <div class="card-head"><div><p class="eyebrow">APOYO A LA DECISIÓN</p><h2>Recomendación operativa</h2></div><span id="lossDecisionStatus" class="pill warning">Sin datos</span></div>
+          <div id="lossRecommendation" class="loss-recommendation"></div>
+        </article>
+      </div>
+      <article class="card">
+        <div class="card-head"><div><p class="eyebrow">PRIORIZACIÓN ECONÓMICA</p><h2>Pérdida por producto</h2></div></div>
+        <div class="table-wrap"><table><thead><tr><th>Producto</th><th>Grupo</th><th>Costo unitario</th><th>Desechadas</th><th>Kg eliminados</th><th>Pérdida bruta</th><th>Valor recuperado</th><th>Pérdida neta</th><th>Prioridad</th></tr></thead><tbody id="lossProductsBody"></tbody><tfoot id="lossProductsFoot"></tfoot></table></div>
       </article>
     </section>
 
@@ -314,5 +342,6 @@
   <script src="barbecho.js"></script>
   <script src="certificaciones.js?v=20260813-sin-material-retirado"></script>
   <script src="emisiones.js?v=20260813"></script>
+  <script src="perdidas.js?v=20260813-2"></script>
 </body>
 </html>
